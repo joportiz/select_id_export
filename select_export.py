@@ -1,7 +1,18 @@
 import pandas as pd
 import os
+import shutil
+
+
 path = os.getcwd()
-df = pd.read_csv('Data/sta_comid_join.csv', index_col=0)
+# csv file for water year types
+df = pd.read_csv('Data/WYT_ALL_COMIDS.csv', index_col=0)
+
+
+if not os.path.exists("results"):
+    os.makedirs("results")
+else:
+    shutil.rmtree('results')
+    os.makedirs("results")
 
 ''' Data example
         STAIDT                                        STATION_NA  NHDV2_COMI       COMID
@@ -15,6 +26,7 @@ FID
 '''
 
 # read only 'COMID' column of csv file
+# csv file for data extraction references
 comids = pd.read_csv('Data/sta_comid_join.csv', usecols=['COMID'])
 
 ''' Data example
@@ -37,10 +49,12 @@ ids = comids['COMID'].tolist()
 
 def select_comid(df, comid):
     # to do, save a csv with that df, and we can erase the return afer
-    return df.loc[df['COMID'] == comid]
+    comid_df = df.loc[df['COMID'] == comid]
+
+    return comid_df
 
 
 # loop ids to get each and save
 for id in ids:
     id_df = select_comid(df, id)
-    df.to_csv('Results/{}.csv'.format(id))
+    id_df.to_csv('results/{}.csv'.format(id))

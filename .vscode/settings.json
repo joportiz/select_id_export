@@ -1,2 +1,3 @@
 {
+  "python.pythonPath": "my-virtualenv/bin/python"
 }
