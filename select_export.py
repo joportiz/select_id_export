@@ -1,9 +1,7 @@
 import pandas as pd
 import os
-
 path = os.getcwd()
-
-df = pd.read_csv('Data/sta_comid_join.csv', index_col = 0)
+df = pd.read_csv('Data/sta_comid_join.csv', index_col=0)
 
 ''' Data example
         STAIDT                                        STATION_NA  NHDV2_COMI       COMID
@@ -16,7 +14,7 @@ FID
 
 '''
 
-#read only 'COMID' column of csv file
+# read only 'COMID' column of csv file
 comids = pd.read_csv('Data/sta_comid_join.csv', usecols=['COMID'])
 
 ''' Data example
@@ -29,23 +27,20 @@ comids = pd.read_csv('Data/sta_comid_join.csv', usecols=['COMID'])
 '''
 
 
-#convert to list to make it easier to iterate later
+# convert to list to make it easier to iterate later
 ids = comids['COMID'].tolist()
 ''' Data Example
 [10744456.0, 8922761.0, 20267023.0, 8915907.0, 8922715.0]
 '''
-#define select id rows from dataframe function
-def select_comid (df, comid):
-    df_comid = df.loc[df['COMID'] == comid]
+# define select id rows from dataframe function
 
-    #to do, save a csv with that df, and we can erase the return afer
-    return df_comid
 
-#loop ids to get each and save
+def select_comid(df, comid):
+    # to do, save a csv with that df, and we can erase the return afer
+    return df.loc[df['COMID'] == comid]
+
+
+# loop ids to get each and save
 for id in ids:
     id_df = select_comid(df, id)
     df.to_csv('Results/{}.csv'.format(id))
-
-
-
-
